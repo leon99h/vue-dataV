@@ -13,41 +13,47 @@ export default {
     return {
       config: {
         header: [
-          `<span class="asfa">数据点名</span>`,
-          `<span class="asfa">数值</span>`,
-          `<span class="asfa">位置编码</span>`
+          `<span class="s-board-box-text">数据点名</span>`,
+          `<span class="s-board-box-text">数值</span>`,
+          `<span class="s-board-box-text">位置编码</span>`
         ],
-        data: [
-          ["行1列1", "行1列2", "行1列3"],
-          ["行2列1", `<span class="asfa">36.9 0c</span>`, "行2列3"],
-          ["行3列1", "36.9 0c", "行3列3"],
-          ["行4列1", "36.9 0c", "行4列3"],
-          ["行5列1", "36.9 0c", "行5列3"],
-          ["行6列1", "行6列2", "行6列3"],
-          ["行6列1", "行6列2", "行6列3"],
-          ["行6列1", "行6列2", "行6列3"],
-          ["行6列1", "行6列2", "行6列3"],
-          ["行6列1", "行6列2", "行6列3"],
-          ["行6列1", "行6列2", "行6列3"],
-          ["行6列1", "行6列2", "行6列3"],
-          ["行6列1", "行6列2", "行6列3"]
-        ],
+        data: [],
         rowNum: 10,
         headerBGC: "rgba(36, 65, 120,1)",
         oddRowBGC: "transparent",
         evenRowBGC: "transparent",
         headerHeight: 22,
         columnWidth: [100, 60, 80]
-      }
+      },
+      timer: null
     };
   },
+  created() {
+    // this.getData();
+    // this.timer = setInterval(this.getData, 10000);
+  },
   methods: {
-    gettime() {
-      this.nowDate = new Date().toLocaleString();
+    async getData() {
+      fetch("http://123.60.84.33:8099/device/data/bms-temperature-voltage")
+        .then(response => response.json())
+        .then(({ data }) => {
+          if (data) {
+            data_handle(data);
+          }
+        });
     },
-
-    onscreenfull() {
-      screenfull.toggle();
+    data_handle(arr) {
+      let arr1 = [];
+      arr.map((v, i) => {
+        if (v.pointName || v.value || v.locationCode) {
+          arr1.push([
+            `<span class="s-board-box-text">${v.pointName}</span>`,
+            `<span class="s-board-box-text">${v.value}°c</span>`,
+            `<span class="s-board-box-text">${v.locationCode}</span>`
+          ]);
+        }
+      });
+      this.config.data = arr1;
     }
   },
   beforeDestroy() {
@@ -60,11 +66,11 @@ export default {
   width: 250px;
   height: 360px;
   background: rgba(9, 23, 62, 0.8);
-  box-shadow: 0 0 8px 4px rgba(96, 189, 247, 0.5) inset;
+  box-shadow: 0 0 4px 2px rgba(96, 189, 247, 0.5) inset;
   //   transform: scale(0.5);
   position: absolute;
-  top: 0;
-  left: 300px;
+  top: 356px;
+  left: 0;
   .ss1-tit {
     width: 100%;
     height: 29px;
@@ -85,10 +91,10 @@ export default {
   }
   .scroll-board-box {
     margin: 0 auto;
-    width: 220px;
+    width: 230px;
     height: 300px;
   }
-  .asfa {
+  .s-board-box-text {
     font-size: 10px;
   }
 }

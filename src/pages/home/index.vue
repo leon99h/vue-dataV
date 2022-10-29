@@ -7,8 +7,10 @@
           <storageSummary />
           <bmsVoltage />
         </div>
-        <div class="row-center">123</div>
-        <div class="row-right">1231</div>
+        <div class="row-center"></div>
+        <div class="row-left">
+          <failureDetection />
+        </div>
       </div>
     </dv-full-screen-container>
   </div>
@@ -18,13 +20,15 @@
 import topHeader from "./components/topHeader";
 import storageSummary from "./components/storageSummary";
 import bmsVoltage from "./components/bmsVoltage";
+import failureDetection from "./components/failureDetection";
 
 export default {
   name: "DataView",
   components: {
     topHeader,
     storageSummary,
-    bmsVoltage
+    bmsVoltage,
+    failureDetection
   },
   data() {
     return {};

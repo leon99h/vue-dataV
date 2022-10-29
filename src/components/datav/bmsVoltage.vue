@@ -60,9 +60,6 @@ export default {
     line-height: 58px;
     margin: 20px 0 8px;
   }
-  //   .dv-scroll-board >>> .rows .ceil{
-  //     font-size: 100px;
-  //   }
   .asfa {
     font-size: 16px;
   }
