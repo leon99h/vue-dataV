@@ -1,5 +1,5 @@
 <template>
-  <div class="storage-summary">
+  <div id="storage-summary">
     <div class="ss1-tit">
       <p class="text">储能概括</p>
     </div>
@@ -58,7 +58,7 @@ export default {
 </script>
 
 <style lang="less">
-.storage-summary {
+#storage-summary {
   width: 500px;
   height: 700px;
   background: rgba(9, 23, 62, 0.8);
