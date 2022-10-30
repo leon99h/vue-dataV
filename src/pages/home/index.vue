@@ -10,6 +10,7 @@
         <div class="row-center"></div>
         <div class="row-left">
           <failureDetection />
+          <monitorData/>
         </div>
       </div>
     </dv-full-screen-container>
@@ -21,6 +22,7 @@ import topHeader from "./components/topHeader";
 import storageSummary from "./components/storageSummary";
 import bmsVoltage from "./components/bmsVoltage";
 import failureDetection from "./components/failureDetection";
+import monitorData from "./components/monitorData";
 
 export default {
   name: "DataView",
@@ -28,7 +30,8 @@ export default {
     topHeader,
     storageSummary,
     bmsVoltage,
-    failureDetection
+    failureDetection,
+    monitorData
   },
   data() {
     return {};
