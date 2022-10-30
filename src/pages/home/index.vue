@@ -7,10 +7,16 @@
           <storageSummary />
           <bmsVoltage />
         </div>
-        <div class="row-center"></div>
+        <div class="row-center">
+          <mainInfo />
+          <div class="row-center-b">
+            <weekMcd />
+            <socCurve />
+          </div>
+        </div>
         <div class="row-left">
           <failureDetection />
-          <monitorData/>
+          <monitorData />
         </div>
       </div>
     </dv-full-screen-container>
@@ -23,6 +29,9 @@ import storageSummary from "./components/storageSummary";
 import bmsVoltage from "./components/bmsVoltage";
 import failureDetection from "./components/failureDetection";
 import monitorData from "./components/monitorData";
+import mainInfo from "./components/main-info";
+import socCurve from "./components/soc-curve";
+import weekMcd from "./components/week-mcd";
 
 export default {
   name: "DataView",
@@ -31,7 +40,10 @@ export default {
     storageSummary,
     bmsVoltage,
     failureDetection,
-    monitorData
+    monitorData,
+    mainInfo,
+    socCurve,
+    weekMcd
   },
   data() {
     return {};
@@ -66,6 +78,15 @@ export default {
     .row-center {
       flex: 1;
       border: 1px solid #000;
+      .row-center-b {
+        height: 168px;
+        width: 100%;
+        border: 1px solid red;
+        display: grid;
+        grid-template-columns: 398px 470px;
+        justify-content: space-around;
+        position: relative;
+      }
     }
     .row-right {
       width: 250px;
