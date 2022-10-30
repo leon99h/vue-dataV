@@ -65,7 +65,6 @@ export default {
 #main-info {
   width: 893px;
   height: 547px;
-  border: 1px solid red;
   margin-top: 10px;
   position: relative;
   .d-flyline-chart {

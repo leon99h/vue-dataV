@@ -1,7 +1,7 @@
 <template>
   <div id="soc-curve">
     <div id="v-echarts-soc" style="width:941px;height:337px;"></div>
-    <div class="tit1">SOC曲线(假)</div>
+    <div class="tit1">SOC曲线</div>
     <div class="tit2">单位：%</div>
   </div>
 </template>
@@ -12,32 +12,38 @@ import { socCurve } from "../api/home";
 
 export default {
   data() {
-    return {};
+    return {
+      data1: [],
+      data2: [],
+      timer: null,
+      myChart: null
+    };
   },
   mounted() {
-    // this.getData();
-    this.drawLine();
+    this.myChart = echarts.init(document.getElementById("v-echarts-soc"));
+    this.getData();
+    this.timer = setInterval(this.getData, 5000);
   },
   methods: {
     getData() {
-      socCurve().then(({ data }) => {});
+      socCurve().then(({ data }) => {
+        let { socList } = data;
+        let data1 = [];
+        let data2 = [];
+        if (Array.isArray(socList)) {
+          socList.map(v => {
+            data1.push(v.time);
+            data2.push(v.value);
+          });
+          this.data1 = data1;
+          this.data2 = data2;
+          this.drawLine();
+        }
+      });
     },
     drawLine() {
       let option = {
-        title: {
-          text: "一周充放电统计1",
-          textStyle: {
-            color: "rgba(9, 23, 62,0.3)"
-          }
-        },
-        legend: {
-          textStyle: {
-            color: "#9E9E9E"
-          },
-          data: ["充电", "放电"]
-        },
         xAxis: {
-          //   type: "category",
           boundaryGap: false,
           nameTextStyle: {
             color: "#9E9E9E",
@@ -52,27 +58,12 @@ export default {
           axisTick: {
             show: false
           },
-          data: [
-            "09:00",
-            "09:20",
-            "09:40",
-            "10:00",
-            "10:20",
-            "10:40",
-            "11:00",
-            "11:20",
-            "11:40",
-            "12:00",
-            "12:20",
-            "12:40",
-            "13:00"
-          ]
+          data: this.data1
         },
         yAxis: {
           splitLine: {
             lineStyle: {
               color: "rgb(56, 62, 144)",
-
               type: "dashed"
             }
           }
@@ -107,13 +98,16 @@ export default {
             emphasis: {
               focus: "series"
             },
-            data: [120, 282, 111, 234, 220, 340, 310]
+            data: this.data2
           }
         ]
       };
-      let myChart = echarts.init(document.getElementById("v-echarts-soc"));
-      myChart.setOption(option);
+      this.myChart.setOption(option);
     }
+  },
+  beforeDestroy() {
+    clearTimeout(this.timer);
+    // echarts.dispose();
   }
 };
 </script>

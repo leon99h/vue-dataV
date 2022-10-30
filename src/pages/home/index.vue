@@ -60,8 +60,6 @@ export default {
   color: #fff;
 
   #dv-full-screen-container {
-    // background-image: url("./img/bg.png");
-    // background-size: 100% 100%;
     box-shadow: 0 0 3px blue;
     display: flex;
     flex-direction: column;
@@ -71,17 +69,14 @@ export default {
     display: flex;
     .row-left {
       width: 250px;
-      border: 1px solid #000;
       margin: 12px 10px 0 14px;
       position: relative;
     }
     .row-center {
       flex: 1;
-      border: 1px solid #000;
       .row-center-b {
         height: 168px;
         width: 100%;
-        border: 1px solid red;
         display: grid;
         grid-template-columns: 398px 470px;
         justify-content: space-around;
