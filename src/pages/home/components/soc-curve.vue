@@ -2,11 +2,11 @@
   <div id="soc-curve">
     <div id="v-echarts-soc" style="width:941px;height:337px;"></div>
     <div class="tit1">SOC曲线</div>
+    <div class="tit2">单位：%</div>
   </div>
 </template>
 
 <script>
-// import echarts from "echarts";
 import * as echarts from "echarts";
 
 export default {
@@ -121,6 +121,11 @@ export default {
   top: -50%;
   left: 190px;
   transform: scale(0.5);
+  #v-echarts-soc{
+    position: absolute;
+    top: 30px;
+    left: -10px;
+  }
   .tit1 {
     position: absolute;
     top: 16px;
@@ -130,6 +135,14 @@ export default {
     background: linear-gradient(180deg, #ffffff 28.9306640625%, #56b3ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+  .tit2 {
+    color: #0186c8;
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    font-size: 16px;
+    font-weight: 400;
   }
 }
 </style>

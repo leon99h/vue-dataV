@@ -5,11 +5,11 @@
     </div>
     <div class="f-detection-box1">
       <div class="s">
-        <p>{{ info["当前告警"] }}</p>
+        <p>{{ info["当前告警"] }}11</p>
         <span>当前告警</span>
       </div>
       <div class="s s1">
-        <p>{{ info["今日告警"] }}</p>
+        <p>{{ info["今日告警"] }}12</p>
         <span>今日告警</span>
       </div>
     </div>

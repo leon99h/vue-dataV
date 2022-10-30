@@ -25,7 +25,9 @@ export default {
           textStyle: {
             color: "#9E9E9E"
           },
-          data: ["充电", "放电"]
+          data: ["充电", "放电"],
+          right :120,
+          top :4
         },
         xAxis: {
           // type:'category',
@@ -119,6 +121,10 @@ export default {
   top: -50%;
   left: -190px;
   transform: scale(0.5);
+  #v-echarts-week{
+    position: absolute;
+    top: 20px;
+  }
   .tit1 {
     position: absolute;
     top: 16px;
@@ -132,7 +138,7 @@ export default {
   .tit2 {
     color: #0186c8;
     position: absolute;
-    top: 20px;
+    top: 24px;
     right: 24px;
     font-size: 16px;
     font-weight: 400;
