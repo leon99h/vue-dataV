@@ -1,22 +1,27 @@
 <template>
   <div id="soc-curve">
     <div id="v-echarts-soc" style="width:941px;height:337px;"></div>
-    <div class="tit1">SOC曲线</div>
+    <div class="tit1">SOC曲线(假)</div>
     <div class="tit2">单位：%</div>
   </div>
 </template>
 
 <script>
 import * as echarts from "echarts";
+import { socCurve } from "../api/home";
 
 export default {
   data() {
     return {};
   },
   mounted() {
+    // this.getData();
     this.drawLine();
   },
   methods: {
+    getData() {
+      socCurve().then(({ data }) => {});
+    },
     drawLine() {
       let option = {
         title: {
@@ -121,7 +126,7 @@ export default {
   top: -50%;
   left: 190px;
   transform: scale(0.5);
-  #v-echarts-soc{
+  #v-echarts-soc {
     position: absolute;
     top: 30px;
     left: -10px;

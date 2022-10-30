@@ -3,7 +3,11 @@
     <div class="ss1-tit">
       <p class="text">BMS温度电压</p>
     </div>
-    <dv-scroll-board :config="config" class="scroll-board-box" />
+    <dv-scroll-board
+      :config="config"
+      class="scroll-board-box"
+      ref="scrollBoard1"
+    />
   </div>
 </template>
 
@@ -23,15 +27,15 @@ export default {
         headerBGC: "rgba(36, 65, 120,1)",
         oddRowBGC: "transparent",
         evenRowBGC: "transparent",
-        headerHeight: 22,
-        columnWidth: [100, 60, 80]
+        headerHeight: 44,
+        columnWidth: [200, 120, 160]
       },
       timer: null
     };
   },
   created() {
     this.getData();
-    // this.timer = setInterval(this.getData, 5000);
+    this.timer = setInterval(this.getData, 5000);
   },
   methods: {
     async getData() {
@@ -52,7 +56,7 @@ export default {
           ]);
         }
       });
-      this.config.data = arr1;
+      this.$refs["scrollBoard1"].updateRows(arr1, null);
     }
   },
   beforeDestroy() {
@@ -62,24 +66,24 @@ export default {
 </script>
 <style lang="less">
 #bms-voltage {
-  width: 250px;
-  height: 360px;
+  width: 500px;
+  height: 720px;
   background: rgba(9, 23, 62, 0.8);
-  box-shadow: 0 0 4px 2px rgba(96, 189, 247, 0.5) inset;
-  //   transform: scale(0.5);
+  box-shadow: 0 0 8px 4px rgba(96, 189, 247, 0.5) inset;
+  transform: scale(0.5);
   position: absolute;
-  top: 356px;
-  left: 0;
+  top: 182px;
+  left: -122px;
   .ss1-tit {
     width: 100%;
-    height: 29px;
-    background: url("./img/11.png") 0 14px no-repeat;
+    height: 60px;
+    background: url("./img/11.png") 0 28px no-repeat;
     background-size: 100%;
     text-align: center;
-    line-height: 29px;
-    margin: 10px 0 4px;
+    line-height: 60px;
+    margin: 20px 0 8px;
     .text {
-      font-size: 15px;
+      font-size: 26px;
       font-family: Microsoft YaHei;
       font-weight: 500;
       color: #ffffff;
@@ -90,11 +94,11 @@ export default {
   }
   .scroll-board-box {
     margin: 0 auto;
-    width: 230px;
-    height: 300px;
+    width: 460px;
+    height: 600px;
   }
   .s-board-box-text {
-    font-size: 10px;
+    font-size: 18px;
   }
 }
 </style>

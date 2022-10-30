@@ -5,26 +5,24 @@
     </div>
     <div class="f-detection-box1">
       <div class="s">
-        <p>{{ info["当前告警"] }}11</p>
+        <p>{{ info.currentWarning }}</p>
         <span>当前告警</span>
       </div>
       <div class="s s1">
-        <p>{{ info["今日告警"] }}12</p>
+        <p>{{ info.todayWarning }}</p>
         <span>今日告警</span>
       </div>
     </div>
-    <dv-scroll-board :config="config" class="scroll-board-box" />
+    <dv-scroll-board
+      :config="config"
+      class="scroll-board-box"
+      ref="scrollBoard"
+    />
   </div>
 </template>
 
 <script>
 import { failureDetection } from "../api/home";
-const C_STATUS = {
-  4: "断开",
-  1: "告警",
-  2: "欠压",
-  3: "正常"
-};
 export default {
   data() {
     return {
@@ -41,22 +39,23 @@ export default {
         oddRowBGC: "transparent",
         evenRowBGC: "transparent",
         headerHeight: 44,
-        columnWidth: [180, 87, 98, 129],
-        align: ["left", "center", "left", "center"]
+        columnWidth: [180, 87, 98, 129]
+        // align: ["left", "center", "left", "center"]
       },
       info: {},
       timer: null
     };
   },
-  created() {
+  created() {},
+  mounted() {
     this.getData();
-    // this.timer = setInterval(this.getData, 10000);
+    this.timer = setInterval(this.getData, 10000);
   },
   methods: {
     async getData() {
       failureDetection().then(({ data }) => {
         if (data) {
-          data_handle(data);
+          this.data_handle(data.monitorList);
           this.info = data;
         }
       });
@@ -64,18 +63,18 @@ export default {
     data_handle(arr) {
       let arr1 = [];
       arr.forEach((v, i) => {
-        if (v.pointName || v.value || v.locationCode || v.alarmTime) {
+        if (v.pointName || v.warnGrade || v.locationCode || v.alarmTime) {
           arr1.push([
             `<span class="s-board-box-text">${v.pointName}</span>`,
             `<span class="s-board-box-text success ${
-              v.status == 2 || v.status == 1 ? "warning" : ""
-            }  ${v.status == 4 ? "error" : ""}">${C_STATUS[v.status]}</span>`,
-            `<span class="s-board-box-text">${v.locationCode}</span>`,
+              v.status == "告警" || v.status == "欠压" ? "warning" : ""
+            }  ${v.status == "断开" ? "error" : ""}">${v.status}</span>`,
+            `<span class="s-board-box-text">${v.warnGrade}</span>`,
             `<span class="s-board-box-text">${v.alarmTime}</span>`
           ]);
         }
       });
-      this.config.data = arr1;
+      this.$refs["scrollBoard"].updateRows(arr1, null);
     }
   },
   beforeDestroy() {
@@ -144,7 +143,6 @@ export default {
     margin: 0 auto;
     width: 472px;
     height: 510px;
-    border: 1px solid red;
   }
   .s-board-box-text {
     font-size: 19px;

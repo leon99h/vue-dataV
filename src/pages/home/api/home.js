@@ -33,3 +33,7 @@ export const bmsTemperatureVoltage =()=>{
 export const weekMcd =()=>{
     return fetch(`${HOST}/device/data/Week-mcd`).then(response => response.json())
 }
+//一周充放电
+export const dataMonitor =()=>{
+    return fetch(`${HOST}/device/data/data-monitor`).then(response => response.json())
+}

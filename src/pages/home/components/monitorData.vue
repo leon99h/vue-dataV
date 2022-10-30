@@ -8,161 +8,76 @@
       <div class="ss2">
         <p class="text">功率容量</p>
         <ul class="con border-box">
-          <li class="text-b">
+          <li class="text-b" v-for="v in capacityList" :key="v.title">
             <i class="icon-round"></i>
             <div class="con-b">
-              <span class="text-left">额定功率</span
-              ><span>{{ info["额定功率"] }}</span>
-            </div>
-          </li>
-          <li class="text-b">
-            <i class="icon-round"></i>
-            <div class="con-b">
-              <span class="text-left">实时功率</span
-              ><span>{{ info["实时功率"] }}</span>
-            </div>
-          </li>
-          <li class="text-b">
-            <i class="icon-round"></i>
-            <div class="con-b">
-              <span class="text-left">剩余充电量</span
-              ><span>{{ info["剩余充电量"] }}</span>
-            </div>
-          </li>
-          <li class="text-b">
-            <i class="icon-round"></i>
-            <div class="con-b">
-              <span class="text-left">剩余放电量</span
-              ><span>{{ info["剩余放电量"] }}</span>
-            </div>
-          </li>
-          <li class="text-b">
-            <i class="icon-round"></i>
-            <div class="con-b">
-              <span class="text-left">额定容量</span
-              ><span>{{ info["额定容量"] }}</span>
+              <span class="text-left">{{ v.title }}</span
+              ><span>{{ v.value }}</span>
             </div>
           </li>
         </ul>
       </div>
       <div class="ss2">
         <p class="text">单体信息</p>
-        <div class="ss2-box1">
-          <div class="border-box">
-            <div class="text-b">
-              <i class="icon-round"></i>
-              <div class="con-b">
-                <span class="text-left w-text">单体最大电压</span
-                ><span>{{ info["单体最大电压"] }}</span>
-              </div>
+        <ul class="con">
+          <li class="text-b" v-for="v in simpleList" :key="v.title">
+            <i class="icon-round"></i>
+            <div class="con-b">
+              <span class="text-left">{{ v.title }}</span
+              ><span>{{ v.value }}</span>
             </div>
-            <div class="text-b">
-              <i class="icon-round"></i>
-              <div class="con-b">
-                <span class="text-left  w-text">单体最小电压</span
-                ><span>{{ info["单体最小电压"] }}</span>
-              </div>
-            </div>
-            <div class="text-b">
-              <i class="icon-round"></i>
-              <div class="con-b">
-                <span class="text-left  w-text">单体平均电压</span
-                ><span>{{ info["单体平均电压"] }}</span>
-              </div>
-            </div>
+          </li>
+          <div class="border-box2">
+            <span class="border-box"></span>
+            <span class="border-box"></span>
           </div>
-          <div class="border-box">
-            <div class="text-b">
-              <i class="icon-round"></i>
-              <div class="con-b">
-                <span class="text-left w-text">单体最高温度</span
-                ><span>{{ info["单体最高温度"] }}</span>
-              </div>
-            </div>
-            <div class="text-b">
-              <i class="icon-round"></i>
-              <div class="con-b">
-                <span class="text-left w-text">单体最低温度</span
-                ><span>{{ info["单体最低温度"] }}</span>
-              </div>
-            </div>
-            <div class="text-b">
-              <i class="icon-round"></i>
-              <div class="con-b">
-                <span class="text-left w-text">单体平均温度</span
-                ><span>{{ info["单体平均温度"] }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        </ul>
       </div>
       <div class="ss2">
         <p class="text">单体信息</p>
-        <div class="ss2-box2 border-box">
-          <div>
-            <div class="tit">
-              <span class="t1">电压</span>
-              <span class="t2">{{ info["电压"] }}</span>
+        <ul class="con border-box">
+          <li v-for="(v, i) in otherList" :key="v.title">
+            <div v-if="i == 1 || i == 0" class="tit">
+              <span class="y">{{ v.title }}</span>
+              <span>{{ v.value }}</span>
             </div>
-            <div class="text-b">
+            <div v-else class="text-b">
               <i class="icon-round"></i>
               <div class="con-b">
-                <span class="text-left w180">高压线充电电压上限</span
-                ><span>{{ info["高压线充电电压上限"] }}</span>
+                <span class="text-left">{{ v.title }}</span
+                ><span>{{ v.value }}</span>
               </div>
             </div>
-            <div class="text-b">
-              <i class="icon-round"></i>
-              <div class="con-b">
-                <span class="text-left w180">单体平均电压</span
-                ><span>{{ info["单体平均电压"] }}</span>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div class="tit">
-              <span class="t1">电压</span>
-              <span class="t2">{{ info["电压"] }}</span>
-            </div>
-            <div class="text-b">
-              <i class="icon-round"></i>
-              <div class="con-b">
-                <span class="text-left w180">高压线充电电压上限</span
-                ><span>{{ info["高压线充电电压上限"] }}</span>
-              </div>
-            </div>
-            <div class="text-b">
-              <i class="icon-round"></i>
-              <div class="con-b">
-                <span class="text-left w180">单体平均电压</span
-                ><span>{{ info["单体平均电压"] }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { confinfo } from "../api/home";
+import { dataMonitor } from "../api/home";
 export default {
   data() {
     return {
       timer: null,
+      capacityList: [],
+      otherList: [],
+      simpleList: [],
       info: {}
     };
   },
   created() {
     this.getData();
-    // this.timer = setInterval(this.getData, 10000);
+    this.timer = setInterval(this.getData, 10000);
   },
   methods: {
     getData() {
-      confinfo().then(({ data }) => {
+      dataMonitor().then(({ data }) => {
         if (data) {
-          this.info = data;
+          this.capacityList = data.capacityList;
+          this.otherList = data.otherList;
+          this.simpleList = data.simpleList;
         }
       });
     }
@@ -207,10 +122,9 @@ export default {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(3, 1fr);
     grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    grid-row-gap: 20px;
     .ss2 {
-      width: 100%;
-      margin-top: 30px;
+      position: relative;
     }
     .text {
       height: 31px;
@@ -221,10 +135,20 @@ export default {
       background-size: 17px 19px;
       padding-left: 30px;
     }
-    .border-box {
+    .con {
+      display: grid;
       width: 100%;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      grid-column-gap: 12px;
+      grid-row-gap: 10px;
+      margin-top: 18px;
+      // height: 100px;
+      padding: 8px 4px;
+      position: relative;
+    }
+    .border-box {
       box-shadow: 0 0 4px 2px rgba(0, 160, 233, 0.8) inset;
-      padding: 6px 2px;
       border-radius: 10px;
     }
     .text-b {
@@ -241,13 +165,6 @@ export default {
         .text-left {
           width: 120px;
         }
-        .w-text {
-          width: 140px;
-        }
-        .w180 {
-          width: 160px;
-          font-size: 16px;
-        }
       }
       .icon-round {
         width: 6px;
@@ -258,37 +175,24 @@ export default {
         margin: 5px;
       }
     }
-    .con {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      grid-column-gap: 2px;
-      grid-row-gap: 4px;
-      margin-top: 20px;
-    }
-    .ss2-box1 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-column-gap: 20px;
-      margin-top: 20px;
-    }
-    .ss2-box2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-column-gap: 20px;
-      margin-top: 20px;
-      .tit {
-        display: flex;
-        justify-content: center;
-        font-size: 19px;
-        color: #ffffff;
-        span {
-          margin: 4px;
-        }
-        .t1 {
-          color: rgba(255, 203, 78, 1);
-        }
+    .tit {
+      display: flex;
+      justify-content: space-evenly;
+      font-size: 19px;
+      color: #ffffff;
+      .y {
+        color: rgba(255, 203, 78, 1);
       }
+    }
+    .border-box2 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 10px;
     }
   }
 }

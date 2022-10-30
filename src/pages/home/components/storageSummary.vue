@@ -74,7 +74,7 @@ export default {
   },
   created() {
     this.getData();
-    // this.timer = setInterval(this.getData, 4000);
+    this.timer = setInterval(this.getData, 10000);
   },
   methods: {
     getData() {

@@ -9,15 +9,39 @@
 <script>
 // import echarts from "echarts";
 import * as echarts from "echarts";
+import { weekMcd } from "../api/home";
 
 export default {
   data() {
-    return {};
+    return {
+      data1: [],
+      data2: [],
+      timer: null,
+      myChart: null
+    };
   },
+  created() {},
   mounted() {
-    this.drawLine();
+    this.myChart = echarts.init(document.getElementById("v-echarts-week"));
+    this.getData();
+    this.timer = setInterval(this.getData, 5000);
   },
   methods: {
+    getData() {
+      weekMcd().then(({ data }) => {
+        if (data) {
+          let data1 = [];
+          let data2 = [];
+          Object.values(data).forEach(v => {
+            data1.push(v["充电电量"]);
+            data2.push(v["放电电量"]);
+          });
+          this.data1 = data1;
+          this.data2 = data2;
+          this.drawLine();
+        }
+      });
+    },
     drawLine() {
       let option = {
         // backgroundColor: "rgba(96, 189, 247 ,0.5)",
@@ -26,8 +50,8 @@ export default {
             color: "#9E9E9E"
           },
           data: ["充电", "放电"],
-          right :120,
-          top :4
+          right: 120,
+          top: 4
         },
         xAxis: {
           // type:'category',
@@ -66,7 +90,7 @@ export default {
           {
             name: "充电",
             type: "bar",
-            data: [5, 20, 136, 10, 10, 20, 1],
+            data: this.data1,
             itemStyle: {
               barBorderRadius: [2, 2, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
@@ -84,7 +108,7 @@ export default {
           {
             name: "放电",
             type: "bar",
-            data: [5, 20, 136, 10, 10, 20, 1],
+            data: this.data2,
             itemStyle: {
               barBorderRadius: [2, 2, 0, 0],
               color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
@@ -105,9 +129,12 @@ export default {
           }
         ]
       };
-      let myChart = echarts.init(document.getElementById("v-echarts-week"));
-      myChart.setOption(option);
+      this.myChart.setOption(option);
     }
+  },
+  beforeDestroy() {
+    clearTimeout(this.timer);
+    echarts.dispose();
   }
 };
 </script>
@@ -121,7 +148,7 @@ export default {
   top: -50%;
   left: -190px;
   transform: scale(0.5);
-  #v-echarts-week{
+  #v-echarts-week {
     position: absolute;
     top: 20px;
   }
