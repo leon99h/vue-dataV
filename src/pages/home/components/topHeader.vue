@@ -33,9 +33,6 @@
 </template>
 
 <script>
-import img1 from "./img/3.png";
-import img2 from "./img/2.png";
-import img4 from "./img/4.png";
 import screenfull from "screenfull";
 export default {
   name: "TopHeader",
@@ -43,9 +40,6 @@ export default {
     return {
       nowDate: "",
       timer: "",
-      img1,
-      img2,
-      img4
     };
   },
   created() {

@@ -5,11 +5,11 @@
     </div>
     <div class="f-detection-box1">
       <div class="s">
-        <p>123</p>
+        <p>{{ info["当前告警"] }}</p>
         <span>当前告警</span>
       </div>
       <div class="s s1">
-        <p>12</p>
+        <p>{{ info["今日告警"] }}</p>
         <span>今日告警</span>
       </div>
     </div>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { failureDetection } from "../api/home";
 const C_STATUS = {
   4: "断开",
   1: "告警",
@@ -43,29 +44,22 @@ export default {
         columnWidth: [180, 87, 98, 129],
         align: ["left", "center", "left", "center"]
       },
+      info: {},
       timer: null
     };
   },
   created() {
-    this.data_handle([
-      {
-        pointName: "大帅发生",
-        location: "131231",
-        status: "2",
-        alarmTime: "123 12:33"
-      }
-    ]);
+    this.getData();
     // this.timer = setInterval(this.getData, 10000);
   },
   methods: {
     async getData() {
-      fetch("http://123.60.84.33:8099/device/data/failure-detection")
-        .then(response => response.json())
-        .then(({ data }) => {
-          if (data) {
-            data_handle(data);
-          }
-        });
+      failureDetection().then(({ data }) => {
+        if (data) {
+          data_handle(data);
+          this.info = data;
+        }
+      });
     },
     data_handle(arr) {
       let arr1 = [];

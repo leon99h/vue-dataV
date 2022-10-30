@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { bmsTemperatureVoltage } from "../api/home";
 export default {
   data() {
     return {
@@ -29,18 +30,16 @@ export default {
     };
   },
   created() {
-    // this.getData();
-    // this.timer = setInterval(this.getData, 10000);
+    this.getData();
+    // this.timer = setInterval(this.getData, 5000);
   },
   methods: {
     async getData() {
-      fetch("http://123.60.84.33:8099/device/data/bms-temperature-voltage")
-        .then(response => response.json())
-        .then(({ data }) => {
-          if (data) {
-            data_handle(data);
-          }
-        });
+      bmsTemperatureVoltage().then(({ data }) => {
+        if (data) {
+          this.data_handle(data);
+        }
+      });
     },
     data_handle(arr) {
       let arr1 = [];

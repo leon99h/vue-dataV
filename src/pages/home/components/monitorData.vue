@@ -11,31 +11,36 @@
           <li class="text-b">
             <i class="icon-round"></i>
             <div class="con-b">
-              <span class="text-left">额定功率</span><span>sdfa</span>
+              <span class="text-left">额定功率</span
+              ><span>{{ info["额定功率"] }}</span>
             </div>
           </li>
           <li class="text-b">
             <i class="icon-round"></i>
             <div class="con-b">
-              <span class="text-left">实时功率</span><span>sdfa</span>
+              <span class="text-left">实时功率</span
+              ><span>{{ info["实时功率"] }}</span>
             </div>
           </li>
           <li class="text-b">
             <i class="icon-round"></i>
             <div class="con-b">
-              <span class="text-left">剩余充电量</span><span>sdfa</span>
+              <span class="text-left">剩余充电量</span
+              ><span>{{ info["剩余充电量"] }}</span>
             </div>
           </li>
           <li class="text-b">
             <i class="icon-round"></i>
             <div class="con-b">
-              <span class="text-left">剩余放电量</span><span>sdfa</span>
+              <span class="text-left">剩余放电量</span
+              ><span>{{ info["剩余放电量"] }}</span>
             </div>
           </li>
           <li class="text-b">
             <i class="icon-round"></i>
             <div class="con-b">
-              <span class="text-left">额定容量</span><span>sdfa</span>
+              <span class="text-left">额定容量</span
+              ><span>{{ info["额定容量"] }}</span>
             </div>
           </li>
         </ul>
@@ -48,21 +53,21 @@
               <i class="icon-round"></i>
               <div class="con-b">
                 <span class="text-left w-text">单体最大电压</span
-                ><span>sdfa</span>
+                ><span>{{ info["单体最大电压"] }}</span>
               </div>
             </div>
             <div class="text-b">
               <i class="icon-round"></i>
               <div class="con-b">
                 <span class="text-left  w-text">单体最小电压</span
-                ><span>sdfa</span>
+                ><span>{{ info["单体最小电压"] }}</span>
               </div>
             </div>
             <div class="text-b">
               <i class="icon-round"></i>
               <div class="con-b">
                 <span class="text-left  w-text">单体平均电压</span
-                ><span>sdfa</span>
+                ><span>{{ info["单体平均电压"] }}</span>
               </div>
             </div>
           </div>
@@ -71,21 +76,21 @@
               <i class="icon-round"></i>
               <div class="con-b">
                 <span class="text-left w-text">单体最高温度</span
-                ><span>sdfa</span>
+                ><span>{{ info["单体最高温度"] }}</span>
               </div>
             </div>
             <div class="text-b">
               <i class="icon-round"></i>
               <div class="con-b">
                 <span class="text-left w-text">单体最低温度</span
-                ><span>sdfa</span>
+                ><span>{{ info["单体最低温度"] }}</span>
               </div>
             </div>
             <div class="text-b">
               <i class="icon-round"></i>
               <div class="con-b">
                 <span class="text-left w-text">单体平均温度</span
-                ><span>sdfa</span>
+                ><span>{{ info["单体平均温度"] }}</span>
               </div>
             </div>
           </div>
@@ -97,40 +102,40 @@
           <div>
             <div class="tit">
               <span class="t1">电压</span>
-              <span class="t2">12312</span>
+              <span class="t2">{{ info["电压"] }}</span>
             </div>
             <div class="text-b">
               <i class="icon-round"></i>
               <div class="con-b">
                 <span class="text-left w180">高压线充电电压上限</span
-                ><span>sdfa</span>
+                ><span>{{ info["高压线充电电压上限"] }}</span>
               </div>
             </div>
             <div class="text-b">
               <i class="icon-round"></i>
               <div class="con-b">
                 <span class="text-left w180">单体平均电压</span
-                ><span>sdfa</span>
+                ><span>{{ info["单体平均电压"] }}</span>
               </div>
             </div>
           </div>
           <div>
             <div class="tit">
               <span class="t1">电压</span>
-              <span class="t2">12312</span>
+              <span class="t2">{{ info["电压"] }}</span>
             </div>
             <div class="text-b">
               <i class="icon-round"></i>
               <div class="con-b">
                 <span class="text-left w180">高压线充电电压上限</span
-                ><span>sdfa</span>
+                ><span>{{ info["高压线充电电压上限"] }}</span>
               </div>
             </div>
             <div class="text-b">
               <i class="icon-round"></i>
               <div class="con-b">
                 <span class="text-left w180">单体平均电压</span
-                ><span>sdfa</span>
+                ><span>{{ info["单体平均电压"] }}</span>
               </div>
             </div>
           </div>
@@ -141,28 +146,25 @@
 </template>
 
 <script>
+import { confinfo } from "../api/home";
 export default {
   data() {
     return {
-      timer: null
+      timer: null,
+      info: {}
     };
   },
   created() {
+    this.getData();
     // this.timer = setInterval(this.getData, 10000);
   },
   methods: {
-    html_text(tit, d) {
-      return (
-        <template>
-          <div class="text-b">
-            <i class="icon-round" />
-            <div class="con-b">
-              <span class="text-left">tit</span>
-              <span>d</span>
-            </div>
-          </div>
-        </template>
-      );
+    getData() {
+      confinfo().then(({ data }) => {
+        if (data) {
+          this.info = data;
+        }
+      });
     }
   },
   beforeDestroy() {

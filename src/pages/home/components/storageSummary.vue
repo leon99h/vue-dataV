@@ -6,20 +6,29 @@
     <ul class="ss1-box">
       <li>
         <p>累计充电量(mWh)</p>
-        <p>sadfas123123</p>
+        <p>{{ info["累计充电量"] }}</p>
       </li>
-      <li>累计放电量(mWh)</li>
-      <li>今日充电量(mWh)</li>
-      <li>今日放电量(mWh)</li>
+      <li>
+        <p>累计放电量(mWh)</p>
+        <p>{{ info["累计充电量"] }}</p>
+      </li>
+      <li>
+        <p>今日充电量(mWh)</p>
+        <p>{{ info["今日充电量"] }}</p>
+      </li>
+      <li>
+        <p>今日放电量(mWh)</p>
+        <p>{{ info["今日放电量"] }}</p>
+      </li>
     </ul>
     <div class="ss2-box">
       <div class="round">
-        <p>30</p>
-        <span>系统soc</span>
+        <p>{{ info["系统SOC"] }}</p>
+        <span>系统SOC</span>
       </div>
       <div class="round round2">
-        <p class="text">30%</p>
-        <span>系统soc</span>
+        <p class="text">{{ info["系统SOH"] }}</p>
+        <span>系统SOH</span>
       </div>
     </div>
     <div class="ss3-box">
@@ -29,30 +38,53 @@
       </div>
       <div class="pcs0">
         <span class="mr">运行</span>
-        <span>112台</span>
+        <span>{{
+          info && info["PCS运行状态"] && info["PCS运行状态"]["运行"]
+        }}</span>
       </div>
       <div class="pcs0 pcs1">
         <span class="mr">待机</span>
-        <span>1台</span>
+        <span>{{
+          info && info["PCS运行状态"] && info["PCS运行状态"]["待机"]
+        }}</span>
       </div>
       <div class="pcs0 pcs2">
         <span class="mr">停机</span>
-        <span>1台</span>
+        <span>{{
+          info && info["PCS运行状态"] && info["PCS运行状态"]["停机"]
+        }}</span>
       </div>
     </div>
     <div class="ss4-box">
-      <div><span>集装箱数量</span> 32个</div>
-      <div><span>PCS数量</span> 32台</div>
-      <div><span>BMS数量</span> 32个</div>
-      <div><span>电池簇数量</span> 98簇</div>
+      <div><span>集装箱数量</span> {{ info["集装箱数"] }}个</div>
+      <div><span>PCS数量</span> {{ info["pcs数"] }}台</div>
+      <div><span>BMS数量</span> {{ info["BMS数"] }}个</div>
+      <div><span>电池簇数量</span> {{ info["电池簇数量"] }}簇</div>
     </div>
   </div>
 </template>
 
 <script>
+import { storageSummary } from "../api/home.js";
 export default {
   data() {
-    return {};
+    return {
+      info: {}
+    };
+  },
+  created() {
+    this.getData();
+    // this.timer = setInterval(this.getData, 4000);
+  },
+  methods: {
+    getData() {
+      storageSummary().then(({ data }) => {
+        this.info = data;
+      });
+    }
+  },
+  beforeDestroy() {
+    clearTimeout(this.timer);
   }
 };
 </script>
